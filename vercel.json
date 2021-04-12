@@ -2,6 +2,6 @@
   "name": "backend_resgiter_user",
   "version": 2,
   "env": {
-    "MONGO_DB_URI": "@my-mongodb-uri"
+    "MONGO_DB_URI": "@mongodb-uri"
   }
 }
