@@ -24,4 +24,22 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.get("/register", async (req, res) => {
+  try {
+    //pegando todos os usuarios do banco
+    const user = await User.find({});
+
+    return res.send({ user });
+  } catch (err) {
+    return res.status(400).send({ message: "Search failed", error: err });
+  }
+});
+
+router.put("/register/:id", async (req, res) => {
+  const { id } = req.params.id;
+  return User.updateOne({ _id: id }, req.body)
+    .then((result) => res.json(result))
+    .catch((err) => res.json(err));
+});
+
 module.exports = (app) => app.use("/auth", router);
