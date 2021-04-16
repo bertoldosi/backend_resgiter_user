@@ -11,8 +11,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-require("./controllers/authController")(app);
+require("./controllers/clienteController")(app);
 
 app.listen(port, host, function () {
-  console.log("Server started.......");
+  console.log(`Server started... ${port}`);
 });
