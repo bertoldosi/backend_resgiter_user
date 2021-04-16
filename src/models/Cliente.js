@@ -1,7 +1,7 @@
 const mongoose = require("../database");
 
 const ClienteSchema = new mongoose.Schema({
-  name: {
+  nome: {
     type: String,
     required: true,
   },
@@ -11,7 +11,7 @@ const ClienteSchema = new mongoose.Schema({
     required: true,
   },
 
-  age: {
+  idade: {
     type: String,
     required: true,
   },
