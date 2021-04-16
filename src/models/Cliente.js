@@ -6,6 +6,11 @@ const ClienteSchema = new mongoose.Schema({
     required: true,
   },
 
+  sobrenome: {
+    type: String,
+    required: true,
+  },
+
   age: {
     type: String,
     required: true,
