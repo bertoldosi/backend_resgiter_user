@@ -1,3 +1,4 @@
+const { json } = require("body-parser");
 const express = require("express");
 const Cliente = require("../models/Cliente");
 const router = express.Router();
@@ -23,7 +24,6 @@ router.post("/register", async (req, res) => {
 
 router.get("/register", async (req, res) => {
   try {
-    //pegando todos os usuarios do banco
     const cliente = await Cliente.find({});
 
     return res.send({ cliente });
@@ -33,17 +33,32 @@ router.get("/register", async (req, res) => {
 });
 
 router.put("/register/:id", async (req, res) => {
-  const { id } = req.params.id;
-  return Cliente.updateOne({ id: id }, req.body)
-    .then((result) => res.json(result))
-    .catch((err) => res.json(err));
+  const { nome, sobrenome, email, idade } = req.body;
+  try {
+    const cliente = await Cliente.findByIdAndUpdate(
+      req.params.id,
+      { nome, sobrenome, email, idade },
+      {
+        new: true, // {new: true} - retornando o cliente atualizado
+      }
+    );
+
+    return res.send({ cliente });
+  } catch (err) {
+    return res.status(400).send({ message: "Erro ao atualizar cliente" });
+  }
 });
 
 router.delete("/register/:id", async (req, res) => {
-  const { id } = req.params.id;
-  return Cliente.deleteOne({ id: id })
-    .then((result) => res.json(result))
-    .catch((err) => res.json(err));
+  try {
+    const cliente = await Cliente.findByIdAndDelete(req.params.id, {
+      delete: true, //retornando usuário excluído
+    });
+
+    return res.send({ message: `${cliente.nome} removido` });
+  } catch (err) {
+    return res.status(400).send({ message: `Erro ao remover ${cliente.nome}` });
+  }
 });
 
 module.exports = (app) => app.use("/cliente", router);
